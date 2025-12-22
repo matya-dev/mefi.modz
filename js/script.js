@@ -20,7 +20,7 @@ const modsData = [
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
         // Замените эту ссылку на прямую ссылку вашего изображения в Google Диске (опционально)
-        image: "data/preview.png",
+        image: "data/armor/preview.png",
         size: "4 MB", 
         downloads: 111,
         // ПРЯМАЯ ССЫЛКА ДЛЯ СКАЧИВАНИЯ
@@ -31,7 +31,7 @@ const modsData = [
         title: "Броня Balenciaga черная", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/preview1.png",
+        image: "data/armor/preview1.png",
         size: "4 MB", 
         downloads: 222,
         file: "https://drive.google.com/uc?export=download&id=1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX"
