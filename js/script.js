@@ -19,21 +19,20 @@ const modsData = [
         title: "Броня Balenciaga белая", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/armor/preview.png", // Можно заменить на ссылку на картинку в Google Диске
+        image: "data/armor/preview.png", // Оставьте как есть или тоже используйте Google Диск
         size: "4 MB", 
         downloads: 111,
-        file: "https://drive.google.com/file/d/1HmP8aSrfoKEMihQ_j8OBrhl3JbpcKU-_/view" // ВСТАВЬТЕ ССЫЛКУ СЮДА
+        file: "https://drive.google.com/uc?export=download&id=1HmP8aSrfoKEMihQ_j8OBrhl3JbpcKU-_"
     },
-
     { 
         id: 2, 
         title: "Броня Balenciaga черная", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/armor/preview1.png", // Можно заменить на ссылку на картинку в Google Диске
+        image: "data/armor/preview1.png", // Оставьте как есть или тоже используйте Google Диск
         size: "4 MB", 
         downloads: 222,
-        file: "https://drive.google.com/file/d/1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX/view" // ВСТАВЬТЕ ССЫЛКУ СЮДА
+        file: "https://drive.google.com/uc?export=download&id=1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX"
     }
 ];
 
