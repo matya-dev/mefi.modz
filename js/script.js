@@ -19,10 +19,10 @@ const modsData = [
         title: "Броня Balenciaga белая", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/armor/preview.png", 
+        image: "data/armor/preview.png", // Можно заменить на ссылку на картинку в Google Диске
         size: "4 MB", 
         downloads: 111,
-        file: "data/armor/download.rar"
+        file: "https://drive.google.com/file/d/1HmP8aSrfoKEMihQ_j8OBrhl3JbpcKU-_/view" // ВСТАВЬТЕ ССЫЛКУ СЮДА
     },
 
     { 
@@ -30,10 +30,10 @@ const modsData = [
         title: "Броня Balenciaga черная", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/armor/preview1.png", 
+        image: "data/armor/preview1.png", // Можно заменить на ссылку на картинку в Google Диске
         size: "4 MB", 
         downloads: 222,
-        file: "data/armor/download1.rar"
+        file: "https://drive.google.com/file/d/1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX/view" // ВСТАВЬТЕ ССЫЛКУ СЮДА
     }
 ];
 
@@ -244,8 +244,9 @@ function openModModal(modId) {
     
     // Устанавливаем ссылку для скачивания
     const downloadLink = document.getElementById('modal-download-link');
+    // Важно: установка атрибута download заставит браузер скачать файл, а не открыть его
     downloadLink.href = mod.file;
-    downloadLink.setAttribute('download', `${mod.title}.zip`);
+    downloadLink.setAttribute('download', `${mod.title}.rar`); // Меняем .zip на .rar
     
     // Показываем модальное окно
     document.getElementById('modal-overlay').classList.add('active');
