@@ -12,16 +12,18 @@ const categories = [
     { id: 'armor', name: 'Броня', icon: 'fas fa-shield-alt' }
 ];
 
-// Пример данных модов (в реальности нужно получать с сервера или из data-файлов)
+// Пример данных модов
 const modsData = [
     { 
         id: 1, 
         title: "Броня Balenciaga белая", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/armor/preview.png", // Оставьте как есть или тоже используйте Google Диск
+        // Замените эту ссылку на прямую ссылку вашего изображения в Google Диске (опционально)
+        image: "https://images.unsplash.com/photo-1533050487297-09b450131914?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         size: "4 MB", 
         downloads: 111,
+        // ПРЯМАЯ ССЫЛКА ДЛЯ СКАЧИВАНИЯ
         file: "https://drive.google.com/uc?export=download&id=1HmP8aSrfoKEMihQ_j8OBrhl3JbpcKU-_"
     },
     { 
@@ -29,7 +31,7 @@ const modsData = [
         title: "Броня Balenciaga черная", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/armor/preview1.png", // Оставьте как есть или тоже используйте Google Диск
+        image: "https://images.unsplash.com/photo-1534665482403-a909d0d97c67?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
         size: "4 MB", 
         downloads: 222,
         file: "https://drive.google.com/uc?export=download&id=1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX"
@@ -38,26 +40,22 @@ const modsData = [
 
 // Инициализация страницы
 document.addEventListener('DOMContentLoaded', function() {
-    // Если на странице есть контейнер категорий, загружаем категории
     const categoriesContainer = document.getElementById('categories-container');
     if (categoriesContainer) {
         loadCategories();
         loadMods();
     }
     
-    // Если на странице есть FAQ, настраиваем аккордеон
     const faqItems = document.querySelectorAll('.faq-item');
     if (faqItems.length > 0) {
         setupFAQ();
     }
     
-    // Настройка поиска
     const searchInput = document.getElementById('search-input');
     if (searchInput) {
         searchInput.addEventListener('input', filterMods);
     }
     
-    // Настройка модального окна
     setupModal();
 });
 
@@ -68,7 +66,6 @@ function loadCategories() {
     
     container.innerHTML = '';
     
-    // Кнопка "Все"
     const allCategory = document.createElement('div');
     allCategory.className = 'category-card active';
     allCategory.setAttribute('data-category', 'all');
@@ -78,7 +75,6 @@ function loadCategories() {
     `;
     container.appendChild(allCategory);
     
-    // Категории
     categories.forEach(category => {
         const categoryCard = document.createElement('div');
         categoryCard.className = 'category-card';
@@ -90,24 +86,19 @@ function loadCategories() {
         container.appendChild(categoryCard);
     });
     
-    // Обработчики кликов на категории
     document.querySelectorAll('.category-card').forEach(card => {
         card.addEventListener('click', function() {
             const category = this.getAttribute('data-category');
-            
-            // Обновляем активную категорию
             document.querySelectorAll('.category-card').forEach(c => {
                 c.classList.remove('active');
             });
             this.classList.add('active');
-            
-            // Фильтруем моды
             filterByCategory(category);
         });
     });
 }
 
-// Загрузка модов
+// Загрузка модов - ИСПРАВЛЕНО!
 function loadMods() {
     const container = document.getElementById('mods-container');
     if (!container) return;
@@ -124,7 +115,8 @@ function loadMods() {
             </div>
             <div class="mod-info">
                 <h3>${mod.title}</h3>
-                <a href="#" class="btn-download" data-id="${mod.id}">
+                <!-- Убрали data-id и изменили обработчик -->
+                <a href="#" class="btn-download direct-download" data-file="${mod.file}" data-title="${mod.title}">
                     <i class="fas fa-download"></i> Скачать
                 </a>
             </div>
@@ -132,8 +124,29 @@ function loadMods() {
         container.appendChild(modCard);
     });
     
-    // Обработчики для кнопок скачивания
-    document.querySelectorAll('.btn-download').forEach(btn => {
+    // НОВЫЙ обработчик для прямой загрузки
+    document.querySelectorAll('.direct-download').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault(); // Останавливаем только переход по "#"
+            const fileUrl = this.getAttribute('data-file');
+            const fileName = this.getAttribute('data-title') + '.rar';
+            
+            // Создаем временную ссылку для скачивания
+            const tempLink = document.createElement('a');
+            tempLink.href = fileUrl;
+            tempLink.setAttribute('download', fileName);
+            tempLink.style.display = 'none';
+            document.body.appendChild(tempLink);
+            tempLink.click();
+            document.body.removeChild(tempLink);
+            
+            // Можно также открыть ссылку в новой вкладке для Google Drive
+            // window.open(fileUrl, '_blank');
+        });
+    });
+    
+    // Старый обработчик для модального окна (если оно нужно)
+    document.querySelectorAll('.modal-download').forEach(btn => {
         btn.addEventListener('click', function(e) {
             e.preventDefault();
             const modId = parseInt(this.getAttribute('data-id'));
@@ -145,13 +158,8 @@ function loadMods() {
 // Фильтрация по категории
 function filterByCategory(category) {
     const modCards = document.querySelectorAll('.mod-card');
-    
     modCards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
+        card.style.display = (category === 'all' || card.getAttribute('data-category') === category) ? 'block' : 'none';
     });
 }
 
@@ -165,38 +173,25 @@ function filterMods() {
         const title = card.querySelector('h3').textContent.toLowerCase();
         const category = card.getAttribute('data-category');
         
-        // Проверяем категорию
         const categoryMatch = activeCategory === 'all' || category === activeCategory;
-        
-        // Проверяем поисковый запрос
         const searchMatch = title.includes(searchTerm) || searchTerm === '';
         
-        if (categoryMatch && searchMatch) {
-            card.style.display = 'block';
-        } else {
-            card.style.display = 'none';
-        }
+        card.style.display = (categoryMatch && searchMatch) ? 'block' : 'none';
     });
 }
 
 // Настройка FAQ
 function setupFAQ() {
     const faqItems = document.querySelectorAll('.faq-item');
-    
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
-        
         question.addEventListener('click', () => {
-            // Закрываем все остальные
             faqItems.forEach(otherItem => {
                 if (otherItem !== item) {
                     otherItem.querySelector('.faq-answer').classList.remove('active');
                 }
             });
-            
-            // Открываем/закрываем текущий
-            const answer = item.querySelector('.faq-answer');
-            answer.classList.toggle('active');
+            item.querySelector('.faq-answer').classList.toggle('active');
         });
     });
 }
@@ -208,12 +203,10 @@ function setupModal() {
     
     if (!modalOverlay || !closeModalBtn) return;
     
-    // Закрытие модального окна
     closeModalBtn.addEventListener('click', () => {
         modalOverlay.classList.remove('active');
     });
     
-    // Закрытие при клике на оверлей
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) {
             modalOverlay.classList.remove('active');
@@ -221,32 +214,27 @@ function setupModal() {
     });
 }
 
-// Открытие модального окна с информацией о моде
+// Функция открытия модального окна (если она всё ещё нужна)
 function openModModal(modId) {
     const mod = modsData.find(m => m.id === modId);
     if (!mod) return;
     
-    // Находим элемент категории
     const category = categories.find(c => c.id === mod.category);
     
-    // Заполняем модальное окно
     document.getElementById('modal-title').textContent = mod.title;
     document.getElementById('modal-description').textContent = mod.description;
     document.getElementById('modal-category').textContent = category ? category.name : mod.category;
     document.getElementById('modal-size').textContent = mod.size;
     document.getElementById('modal-downloads').textContent = mod.downloads.toLocaleString();
     
-    // Устанавливаем изображение
     const modalImage = document.getElementById('modal-image');
     modalImage.src = mod.image;
     modalImage.alt = mod.title;
     
-    // Устанавливаем ссылку для скачивания
     const downloadLink = document.getElementById('modal-download-link');
-    // Важно: установка атрибута download заставит браузер скачать файл, а не открыть его
     downloadLink.href = mod.file;
-    downloadLink.setAttribute('download', `${mod.title}.rar`); // Меняем .zip на .rar
+    downloadLink.setAttribute('download', `${mod.title}.rar`);
+    downloadLink.setAttribute('data-file', mod.file);
     
-    // Показываем модальное окно
     document.getElementById('modal-overlay').classList.add('active');
 }
