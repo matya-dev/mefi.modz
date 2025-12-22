@@ -35,6 +35,16 @@ const modsData = [
         size: "4 MB", 
         downloads: 222,
         file: "https://drive.google.com/uc?export=download&id=1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX"
+    },
+    { 
+        id: 3, 
+        title: "Сумка Walk (заменяет Большую сумку)", 
+        category: "backpack", 
+        description: "Лучшая сумка на 5рп", 
+        image: "data/backpack/preview.png",
+        size: "44 MB", 
+        downloads: 222,
+        file: "https://drive.google.com/uc?export=download&id=1ovRE-Kc8v8FpKFZGepnnXDH8It3aQvmc"
     }
 ];
 
