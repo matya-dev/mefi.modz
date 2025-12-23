@@ -19,11 +19,9 @@ const modsData = [
         title: "Броня Balenciaga белая", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        // Замените эту ссылку на прямую ссылку вашего изображения в Google Диске (опционально)
-        image: "data/armor/preview.png",
+        image: "https://via.placeholder.com/250x180/1A1A1A/FFFFFF?text=Белая+броня", // Меньшее изображение
         size: "4 MB", 
         downloads: 111,
-        // ПРЯМАЯ ССЫЛКА ДЛЯ СКАЧИВАНИЯ
         file: "https://drive.google.com/uc?export=download&id=1HmP8aSrfoKEMihQ_j8OBrhl3JbpcKU-_"
     },
     { 
@@ -31,7 +29,7 @@ const modsData = [
         title: "Броня Balenciaga черная", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "data/armor/preview1.png",
+        image: "https://via.placeholder.com/250x180/1A1A1A/FFFFFF?text=Черная+броня",
         size: "4 MB", 
         downloads: 222,
         file: "https://drive.google.com/uc?export=download&id=1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX"
@@ -40,10 +38,10 @@ const modsData = [
         id: 3, 
         title: "Сумка Walk (заменяет Большую сумку)", 
         category: "backpack", 
-        description: "Лучшая сумка на 5рп", 
-        image: "data/backpack/preview.png",
+        description: "Лучшая сумка на 5рп. Совместима со всеми версиями GTA5RP. Установка: распаковать в папку с игрой.", 
+        image: "https://via.placeholder.com/250x180/1A1A1A/FFFFFF?text=Сумка+Walk",
         size: "44 MB", 
-        downloads: 222,
+        downloads: 333,
         file: "https://drive.google.com/uc?export=download&id=1ovRE-Kc8v8FpKFZGepnnXDH8It3aQvmc"
     }
 ];
@@ -108,7 +106,7 @@ function loadCategories() {
     });
 }
 
-// Загрузка модов - ИСПРАВЛЕНО!
+// Загрузка модов - С ОТКРЫТИЕМ ОПИСАНИЯ ПО КЛИКУ НА КАРТИНКУ
 function loadMods() {
     const container = document.getElementById('mods-container');
     if (!container) return;
@@ -120,12 +118,14 @@ function loadMods() {
         modCard.className = 'mod-card';
         modCard.setAttribute('data-category', mod.category);
         modCard.innerHTML = `
-            <div class="mod-image">
-                <img src="${mod.image}" alt="${mod.title}" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+            <div class="mod-image clickable-image" data-id="${mod.id}">
+                <img src="${mod.image}" alt="${mod.title}" onerror="this.src='https://via.placeholder.com/250x180?text=No+Image'">
+                <div class="image-overlay">
+                    <i class="fas fa-eye"></i> Показать описание
+                </div>
             </div>
             <div class="mod-info">
                 <h3>${mod.title}</h3>
-                <!-- Убрали data-id и изменили обработчик -->
                 <a href="#" class="btn-download direct-download" data-file="${mod.file}" data-title="${mod.title}">
                     <i class="fas fa-download"></i> Скачать
                 </a>
@@ -134,14 +134,13 @@ function loadMods() {
         container.appendChild(modCard);
     });
     
-    // НОВЫЙ обработчик для прямой загрузки
+    // Обработчик для кнопок скачивания
     document.querySelectorAll('.direct-download').forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault(); // Останавливаем только переход по "#"
+            e.preventDefault();
             const fileUrl = this.getAttribute('data-file');
             const fileName = this.getAttribute('data-title') + '.rar';
             
-            // Создаем временную ссылку для скачивания
             const tempLink = document.createElement('a');
             tempLink.href = fileUrl;
             tempLink.setAttribute('download', fileName);
@@ -149,16 +148,12 @@ function loadMods() {
             document.body.appendChild(tempLink);
             tempLink.click();
             document.body.removeChild(tempLink);
-            
-            // Можно также открыть ссылку в новой вкладке для Google Drive
-            // window.open(fileUrl, '_blank');
         });
     });
     
-    // Старый обработчик для модального окна (если оно нужно)
-    document.querySelectorAll('.modal-download').forEach(btn => {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
+    // Обработчик для клика на картинку (открытие описания)
+    document.querySelectorAll('.clickable-image').forEach(img => {
+        img.addEventListener('click', function(e) {
             const modId = parseInt(this.getAttribute('data-id'));
             openModModal(modId);
         });
@@ -224,7 +219,7 @@ function setupModal() {
     });
 }
 
-// Функция открытия модального окна (если она всё ещё нужна)
+// Функция открытия модального окна
 function openModModal(modId) {
     const mod = modsData.find(m => m.id === modId);
     if (!mod) return;
