@@ -19,7 +19,7 @@ const modsData = [
         title: "Броня Balenciaga белая", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "https://via.placeholder.com/250x180/1A1A1A/FFFFFF?text=Белая+броня", // Меньшее изображение
+        image: "data/armor/preview.png", // Меньшее изображение
         size: "4 MB", 
         downloads: 111,
         file: "https://drive.google.com/uc?export=download&id=1HmP8aSrfoKEMihQ_j8OBrhl3JbpcKU-_"
@@ -29,7 +29,7 @@ const modsData = [
         title: "Броня Balenciaga черная", 
         category: "armor", 
         description: "Красивая броня со времен Дени Абсолюта", 
-        image: "https://via.placeholder.com/250x180/1A1A1A/FFFFFF?text=Черная+броня",
+        image: "data/armor/preview1.png",
         size: "4 MB", 
         downloads: 222,
         file: "https://drive.google.com/uc?export=download&id=1iWbWTvzBACcm1OWsiR5y5I4uwyOqevuX"
@@ -39,7 +39,7 @@ const modsData = [
         title: "Сумка Walk (заменяет Большую сумку)", 
         category: "backpack", 
         description: "Лучшая сумка на 5рп. Совместима со всеми версиями GTA5RP. Установка: распаковать в папку с игрой.", 
-        image: "https://via.placeholder.com/250x180/1A1A1A/FFFFFF?text=Сумка+Walk",
+        image: "data/backpack/preview.png",
         size: "44 MB", 
         downloads: 333,
         file: "https://drive.google.com/uc?export=download&id=1ovRE-Kc8v8FpKFZGepnnXDH8It3aQvmc"
